@@ -13,7 +13,7 @@
                 @endphp
 
                 <div class="d-flex align-items-center">
-                    <div><h4 class="card-title"><a href='{{$detail_page_url}}'>{{$data_item->id}}</a></h4></div>
+                    <div><h4 class="card-title"><a href='{{$detail_page_url}}'>{{$data_item->offer_title}}</a></h4></div>
                     <div class="ms-auto"> 
                         <a data-toggle="tooltip" 
                             title="Edit" 
@@ -31,7 +31,7 @@
                     </div>
                 </div>
 
-                <p class="card-text">Sub Text</p>
+                <p class="card-text">{{$data_item->status}}</p>
                 <p class="card-text">
                     <small class="text-muted">
                         Created: {{ \Carbon\Carbon::parse($data_item->created_at)->format('l jS F Y') }} - {!! \Carbon\Carbon::parse($data_item->created_at)->diffForHumans() !!}

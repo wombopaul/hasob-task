@@ -5,7 +5,7 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h5 id="lbl-offer-modal-title" class="modal-title">Offer</h5>
+                <h5 id="lbl-offer-modal-title" class="modal-title"></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -61,6 +61,10 @@ $(document).ready(function() {
 
     //Show Modal for New Entry
     $(document).on('click', ".btn-new-mdl-offer-modal", function(e) {
+
+        $('#lbl-offer-modal-title').text("New Offer");
+        $('#btn-save-mdl-offer-modal').text("Save");
+
         $('#div-offer-modal-error').hide();
         $('#mdl-offer-modal').modal('show');
         $('#frm-offer-modal').trigger("reset");
@@ -122,6 +126,8 @@ $(document).ready(function() {
         e.preventDefault();
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('input[name="_token"]').val()}});
 
+        $('#lbl-offer-modal-title').text("Edit Offer");
+        $('#btn-save-mdl-offer-modal').text("Update");
         $('#div-offer-modal-error').hide();
         $('#mdl-offer-modal').modal('show');
         $('#frm-offer-modal').trigger("reset");
@@ -135,16 +141,18 @@ $(document).ready(function() {
 
         $.get( "{{ route('sb-api.offers.show','') }}/"+itemId).done(function( response ) {     
 
-			$('#txt-offer-primary-id').val(response.data.id);
-            		$('#status').val(response.data.status);
+      
+
+        $('#txt-offer-primary-id').val(response.data.id);
+        $('#status').val(response.data.status);
 		$('#offer_title').val(response.data.offer_title);
 		$('#price_per_unit').val(response.data.price_per_unit);
 		$('#max_units_per_investor').val(response.data.max_units_per_investor);
 		$('#interest_rate_pct').val(response.data.interest_rate_pct);
-		$('#offer_start_date').val(response.data.offer_start_date);
-		$('#offer_end_date').val(response.data.offer_end_date);
-		$('#offer_settlement_date').val(response.data.offer_settlement_date);
-		$('#offer_maturity_date').val(response.data.offer_maturity_date);
+		$('#offer_start_date').val(new Date(response.data.offer_start_date).toISOString().substring(0, 10));
+		$('#offer_end_date').val(new Date(response.data.offer_end_date).toISOString().substring(0, 10));
+		$('#offer_settlement_date').val(new Date(response.data.offer_settlement_date).toISOString().substring(0, 10));
+		$('#offer_maturity_date').val(new Date(response.data.offer_maturity_date).toISOString().substring(0, 10));
 		$('#tenor_years').val(response.data.tenor_years);
 
 
@@ -288,8 +296,8 @@ $(document).ready(function() {
                         $('#div-offer-modal-error').hide();
 
                         swal({
-                                title: "Saved",
-                                text: "Offer saved successfully",
+                                title: "Success",
+                                text: result.message,
                                 type: "success",
                                 showCancelButton: false,
                                 closeOnConfirm: false,
